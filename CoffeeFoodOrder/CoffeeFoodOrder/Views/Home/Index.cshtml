@@ -1,0 +1,88 @@
+﻿@using PagedList.Mvc
+@using PagedList
+@model IPagedList<CoffeeFoodOrder.Models.Product>
+
+@{
+    ViewBag.Title = "Головна";
+}
+
+<h2 class="my-4">Меню</h2>
+
+<form method="get" class="row g-2 mb-4 align-items-center">
+    <div class="col-auto">
+        <select name="categoryId" class="form-select" onchange="this.form.submit()">
+            <option value="">Усі категорії</option>
+            @foreach (var cat in ViewBag.Categories as SelectList)
+            {
+                <option value="@cat.Value" @(ViewBag.SelectedCategoryId?.ToString() == cat.Value ? "selected" : "")>
+                    @cat.Text
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="col-auto">
+        <input type="text" name="search" class="form-control" placeholder="Пошук товару"
+               value="@ViewBag.Search" />
+    </div>
+
+    <div class="col-auto">
+        <select name="sort" class="form-select" onchange="this.form.submit()">
+            <option value="">Сортувати</option>
+            <option value="price_asc" @(ViewBag.Sort == "price_asc" ? "selected" : "")>Ціна: За зростанням</option>
+            <option value="price_desc" @(ViewBag.Sort == "price_desc" ? "selected" : "")>Ціна: За спаданням</option>
+        </select>
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Знайти</button>
+    </div>
+</form>
+
+
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    @foreach (var product in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <img src="@product.ImageUrl" alt="@product.Name" class="card-img-top product-img" />
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">@product.Description</p>
+                    <p><strong>@product.Price.ToString("N2") грн</strong></p>
+                    <a href="@Url.Action("Add", "Cart", new { id = product.Id })" class="btn btn-primary">Додати в кошик</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Товарів не знайдено за вашим запитом.</p>
+}
+
+
+<div class="mt-4 text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    categoryId = ViewBag.SelectedCategoryId
+}),
+new PagedListRenderOptions
+{
+    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+    UlElementClasses = new[] { "pagination", "justify-content-center" },
+    LiElementClasses = new[] { "page-item" },
+    FunctionToTransformEachPageLink = (liTag, aTag) =>
+    {
+        aTag.AddCssClass("page-link");
+        liTag.InnerHtml = aTag.ToString();
+        return liTag;
+    }
+})
+</div>

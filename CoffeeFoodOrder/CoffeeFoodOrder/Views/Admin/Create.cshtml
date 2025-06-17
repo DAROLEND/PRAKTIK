@@ -1,0 +1,40 @@
+﻿@model CoffeeFoodOrder.Models.Product
+
+@{
+    ViewBag.Title = "Додати товар";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group mb-3">
+        @Html.Label("Назва товару")
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.Label("Опис")
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.Label("Ціна (грн)")
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", step = "0.01" })
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.Label("Зображення")
+        <input type="file" name="ImageFile" class="form-control" />
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.Label("Категорія")
+        @Html.DropDownList("CategoryId", null, "Оберіть категорію", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Додати товар</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Скасувати</a>
+}

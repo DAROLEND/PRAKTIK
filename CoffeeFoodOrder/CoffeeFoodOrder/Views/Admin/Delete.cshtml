@@ -1,0 +1,9 @@
+﻿@model CoffeeFoodOrder.Models.Product
+<h2>Видалити товар</h2>
+<p>Ви впевнені, що хочете видалити <strong>@Model.Name</strong>?</p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Так, видалити</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Скасувати</a>
+}

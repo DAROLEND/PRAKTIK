@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Оформити замовлення";
+}
+
+<h2>Оформити замовлення</h2>
+<form method="post">
+    @Html.Action("UserInfoPartial", "Account")
+
+    <p><strong>До сплати:</strong> @ViewBag.Total грн</p>
+    <button type="submit" class="btn btn-primary">Підтвердити</button>
+</form>

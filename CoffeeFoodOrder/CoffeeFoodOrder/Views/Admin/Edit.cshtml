@@ -1,0 +1,52 @@
+﻿@model CoffeeFoodOrder.Models.Product
+
+@{
+    ViewBag.Title = "Редагувати товар";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-group mb-3">
+        @Html.Label("Назва товару")
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.Label("Опис")
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.Label("Ціна (грн)")
+        @Html.TextBoxFor(m => m.Price, new {
+            @class = "form-control",
+            type = "number",
+            step = "0.01",
+            value = Model.Price.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)
+        })
+    </div>
+
+
+    <div class="form-group mb-3">
+        @Html.Label("Зображення")
+        <input type="file" name="ImageFile" class="form-control" />
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <p class="mt-2">Поточне зображення:</p>
+            <img src="@Model.ImageUrl" style="max-width: 150px; max-height: 150px;" class="border rounded" />
+        }
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.Label("Категорія")
+        @Html.DropDownList("CategoryId", null, "Оберіть категорію", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Скасувати</a>
+}

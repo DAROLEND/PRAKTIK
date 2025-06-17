@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Online Order</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            @Html.ActionLink("Онлайн кафе", "Index", "Home", null, new { @class = "navbar-brand" })
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">@Html.ActionLink("Меню", "Index", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Кошик", "Index", "Cart", null, new { @class = "nav-link" })</li>
+                    @if (User.Identity.IsAuthenticated && User.Identity.Name == "admin")
+                    {
+                        <li class="nav-item">@Html.ActionLink("Адмін-панель", "Index", "Admin", new { }, new { @class = "nav-link" })</li>
+                    }
+
+                </ul>
+
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li class="nav-item">@Html.ActionLink("Профіль", "UserProfile", "Account", null, new { @class = "nav-link" })</li>
+            <li class="nav-item">@Html.ActionLink("Вихід", "Logout", "Account", null, new { @class = "nav-link" })</li>
+        }
+        else
+        {
+            <li class="nav-item">@Html.ActionLink("Реєстрація", "Register", "Account", null, new { @class = "nav-link" })</li>
+            <li class="nav-item">@Html.ActionLink("Вхід", "Login", "Account", null, new { @class = "nav-link" })</li>
+        }
+    </ul>
+</div>
+
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p class="text-center text-muted">&copy; @DateTime.Now.Year - Online Order</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿@model CoffeeFoodOrder.Models.ProfileViewModel
+
+@{
+    ViewBag.Title = "Профіль користувача";
+}
+
+<h2>Профіль</h2>
+
+@if (ViewBag.Status != null)
+{
+    <div class="alert alert-success">@ViewBag.Status</div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label for="FullName" class="form-label">Ім’я</label>
+        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Введіть ім’я" })
+    </div>
+    <div class="mb-3">
+        <label for="Phone" class="form-label">Номер телефону</label>
+        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "099..." })
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Зберегти</button>
+}

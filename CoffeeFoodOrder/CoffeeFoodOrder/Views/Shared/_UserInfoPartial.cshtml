@@ -1,0 +1,24 @@
+﻿@model CoffeeFoodOrder.Models.ProfileViewModel
+
+@if (Model != null)
+{
+    <div class="form-group">
+        <label>Ваше ім’я</label>
+        <input type="text" name="name" class="form-control" value="@Model.FullName" />
+    </div>
+    <div class="form-group">
+        <label>Телефон</label>
+        <input type="text" name="phone" class="form-control" value="@Model.Phone" />
+    </div>
+}
+else
+{
+    <div class="form-group">
+        <label>Ваше ім’я</label>
+        <input type="text" name="name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Телефон</label>
+        <input type="text" name="phone" class="form-control" />
+    </div>
+}

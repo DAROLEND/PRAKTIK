@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CoffeeFoodOrder.Models.Product>
+@{
+    ViewBag.Title = "Керування товарами";
+}
+
+<h2 class="mb-4"><i class="bi bi-box-seam me-2"></i>Керування товарами</h2>
+
+<a href="@Url.Action("Create")" class="btn btn-primary mb-4 px-4 py-2 fs-5">
+    ➕ Додати новий товар
+</a>
+
+<table class="table table-bordered table-hover table-striped admin-table">
+    <thead class="table-dark">
+        <tr>
+            <th style="width: 20%;">Назва</th>
+            <th style="width: 35%;">Опис</th>
+            <th style="width: 10%;">Ціна</th>
+            <th style="width: 20%;">Фото</th>
+            <th style="width: 15%;">Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td><strong>@item.Price.ToString("N2")</strong> грн</td>
+                <td>
+                    <img src="@item.ImageUrl" alt="@item.Name" class="img-fluid rounded" />
+                </td>
+                <td class="admin-actions d-flex flex-column">
+                    <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-edit mb-2">
+                        ✏️ Редагувати
+                    </a>
+                    <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-delete">
+                        🗑️ Видалити
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
